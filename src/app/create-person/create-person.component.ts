@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 declare var window:any;
@@ -10,11 +10,14 @@ declare var window:any;
 })
 export class CreatePersonComponent implements OnInit {
   
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private router: Router) { }
   forModal:any;
   titulo: string = "Create Person";
-  user: string = ""
-
+  name: string = ""
+  lastname: string = ""
+  email: string = ""
+  password: string = ""
+  
   ngOnInit() :void {
     this.forModal = new window.bootstrap.Modal(
       document.getElementById('exampleModal')
@@ -60,5 +63,8 @@ export class CreatePersonComponent implements OnInit {
   }
   closeModal(){
     this.forModal.hide()
+  }
+  savePerson(){
+    
   }
 }
