@@ -19,6 +19,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    "noImplicitAny": false,
     "lib": [
       "ES2022",
       "dom"
@@ -29,5 +30,9 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
+  },
+  "paths": {
+    "crypto": ["node_modules/crypto-browserify"],
+    "stream": ["node_modules/stream-browserify"]
   }
 }

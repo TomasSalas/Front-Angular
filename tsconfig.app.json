@@ -10,5 +10,9 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ]
+  ],
+  "paths": {
+    "stream": ["../node_modules/stream-browserify/index.js"],
+    "crypto": ["../node_modules/crypto-js"]
+  }
 }
