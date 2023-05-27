@@ -12,12 +12,40 @@
       
       <div class="container">
         <form>
-          <input type="text" class="form-control" placeholder="Nombre" id="name" [(ngModel)]="name">
-          <input type="text" class="form-control mt-2" placeholder="Apellidos" id="lastname" [(ngModel)]="lastname">
-          <input type="email" class="form-control mt-2" placeholder="Email" id="email" [(ngModel)]="email">
-          <input type="password" class="form-control mt-2" placeholder="Password" id="password" [(ngModel)]="password">
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Nombre" 
+            name="name" 
+            [(ngModel)]="name"
+          >
+          <input 
+            type="text" 
+            class="form-control mt-2" 
+            placeholder="Apellidos" 
+            name="lastname" 
+            [(ngModel)]="lastname"
+          >
+          <input 
+            type="email" 
+            class="form-control mt-2" 
+            placeholder="Email" 
+            name="email" 
+            [(ngModel)]="email"
+          >
+          <input 
+            type="password" 
+            class="form-control mt-2" 
+            placeholder="Password" 
+            name="password" 
+            [(ngModel)]="password"
+          >
           <div class="d-flex justify-content-center align-items-center">
-            <button class="btn btn-success mt-3 w-50" (click)="savePerson()"> Guardar </button>
+            <button 
+              class="btn btn-success mt-3 w-50" 
+              (click)="savePerson()"
+            > Guardar 
+            </button>
           </div>
         </form>
       </div>
@@ -42,3 +70,11 @@
     </div>
   </div>
 </div>
+
+<!-- Alerta Ingreso Correcto -->
+<div class="d-flex justify-content-center align-items-center">
+  <div class="alert alert-success d-none fixed-bottom align-items-center" id="alertCorrect" role="alert">
+    {{msgAlert}}
+  </div>
+</div>
+ 

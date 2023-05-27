@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import Swal from 'sweetalert2';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +13,11 @@ import { Router } from '@angular/router';
 @Injectable()
 export class LoginComponent implements OnInit {
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(
+    private httpClient: HttpClient, 
+    private router: Router
+  ) { }
+
   forModal:any;
   titulo = "Inicio de sesión"
   email: string = ""

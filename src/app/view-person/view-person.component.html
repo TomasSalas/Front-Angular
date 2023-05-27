@@ -9,6 +9,95 @@
       <div class="container content">
         <h2>View Person</h2>
       </div>
+      <div class="container table-responsive">
+        <table  class="table table-bordered">
+          <thead class="table-warning">
+            <tr>
+              <th scope="col">Identificador</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Email</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dato of datos">
+              <td scope="row">{{ dato.id }}</td>
+              <td>{{ dato.name }}</td>
+              <td>{{ dato.lastname }}</td>
+              <td>{{ dato.email }}</td>
+              <td class="d-flex justify-content-center"> 
+                <button 
+                  class="btn btn-light"
+                  (click)="btnEdit({dato})"
+                > ✏️ 
+                </button>
+                <button 
+                  class="btn btn-light"
+                  (click)="btnDelete()"
+                > ❌ 
+                </button>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEdit" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label>Nombre:</label>
+          <input 
+            type="text" 
+            class="form-control" 
+            value={{name}}
+            name="name"
+            [(ngModel)]="name"
+          >
+          <label>Apellidos:</label>
+          <input 
+            type="text" 
+            class="form-control mt-2" 
+            value={{lastname}}
+            name="lastname"
+            [(ngModel)]="lastname"
+          >
+          <label>Correo Electronico:</label>
+          <input 
+            type="text" 
+            class="form-control mt-2" 
+            value={{email}}
+            name="email"
+            [(ngModel)]="email"
+          >
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button 
+          type="button" 
+          class="btn btn-warning"
+          (click)="btnEditUser()"
+        > Actualizar Datos
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Alert -->
+<div class="d-flex justify-content-center align-items-center">
+  <div class="alert alert-success d-none fixed-bottom align-items-center" id="alertCorrect" role="alert">
+    {{msgAlert}}
   </div>
 </div>

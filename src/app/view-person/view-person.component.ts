@@ -2,14 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+declare var window:any;
+
 @Component({
   selector: 'app-view-person',
   templateUrl: './view-person.component.html',
   styleUrls: ['./view-person.component.css']
 })
+
+
 export class ViewPersonComponent implements OnInit {
   constructor(private router: Router) { }
   ngOnInit() :void {
+
+    this.forModal = new window.bootstrap.Modal(
+      document.getElementById('modalEdit')
+    );
+
     const token: any = localStorage.getItem('TOKEN');
     if(token === null){
       Swal.fire({
@@ -44,5 +53,53 @@ export class ViewPersonComponent implements OnInit {
       }
     }
     
+    this.viewUser()
+  }
+
+  datos:any[] = [];
+  forModal:any;
+  name:string = ""
+  lastname:string = ""
+  email:string = ""
+  password:string = ""
+  msgAlert:string = ""
+
+  async viewUser(){
+    const url = 'http://localhost:3000/viewUsers'
+    const token:any = localStorage.getItem('TOKEN');
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${token}`
+      }
+    });
+
+    const result = await response.json();
+    this.datos = result.data;
+  }
+
+  btnEdit(data:any){
+    this.name = data.dato.name;
+    this.lastname = data.dato.lastname;
+    this.email = data.dato.email;
+    this.openModal()
+  }
+
+  btnDelete(){
+    console.log("Delete")
+  }
+
+  openModal(){
+    this.forModal.show()
+  }
+
+  closeModal(){
+    this.forModal.hide()
+  }
+
+  btnEditUser(){
+    console.log(this.name)
   }
 }
