@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import swal from 'sweetalert2';
+import validateToken from '../middleware/validateToken';
+
 
 declare var window:any;
 
@@ -12,48 +14,19 @@ declare var window:any;
 
 
 export class ViewPersonComponent implements OnInit {
+  token:string = "";
+  
   constructor(private router: Router) { }
   ngOnInit() :void {
+
+    validateToken(this.router)
 
     this.forModal = new window.bootstrap.Modal(
       document.getElementById('modalEdit')
     );
 
-    const token: any = localStorage.getItem('TOKEN');
-    if(token === null){
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Por favor vuelva a iniciar sesión',
-      });
-      this.router.navigate(['/'])
-    }else{
-      function wt_decode(token) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace('-', '+').replace('_', '/');
-        return JSON.parse(window.atob(base64));
-      };
-  
-      const decode = wt_decode(token)
-    
-      let dateExp = new Date(decode.exp * 1000).toLocaleString();
-      let date = new Date().toLocaleString()
-  
-      if (date > dateExp) {
-        Swal.fire({
-          icon: 'info',
-          title: 'Sesión expirada',
-          text: 'Por favor vuelva a iniciar sesión',
-        }).then(() => {
-          localStorage.removeItem('TOKEN')
-          localStorage.removeItem('DATA')
-          this.router.navigate(['/'])
-        })
-        
-      }
-    }
-    
-    this.viewUser()
+    this.token = localStorage.getItem('TOKEN') || "";
+    this.viewUser();
   }
 
   datos:any[] = [];
@@ -66,13 +39,11 @@ export class ViewPersonComponent implements OnInit {
 
   async viewUser(){
     const url = 'http://localhost:3000/viewUsers'
-    const token:any = localStorage.getItem('TOKEN');
-
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `${token}`
+        'Authorization': `${this.token}`
       }
     });
 
@@ -87,8 +58,27 @@ export class ViewPersonComponent implements OnInit {
     this.openModal()
   }
 
-  btnDelete(){
-    console.log("Delete")
+  btnDelete(data:any){
+    swal.fire({
+      icon: 'warning',
+      title: '¿Estás seguro?',
+      text: "No podrás revertir esto!",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+    }).then((result) => {
+      if (result.value) {
+        const url = 'http://localhost:3000/deleteUser'
+        const token:any = localStorage.getItem('TOKEN');
+        
+        swal.fire({
+          icon: 'success',
+          title: 'Usuario eliminado',
+          text: 'Usuario eliminado correctamente!',
+        });
+        
+      }
+    });
+    console.log(data)
   }
 
   openModal(){
