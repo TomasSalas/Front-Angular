@@ -11,13 +11,14 @@
       </div>
       
       <div class="container">
-        <form>
+        <form novalidate>
           <input 
             type="text" 
             class="form-control" 
             placeholder="Nombre" 
             name="name" 
             [(ngModel)]="name"
+            required
           >
           <input 
             type="text" 

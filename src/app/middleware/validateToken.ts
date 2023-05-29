@@ -21,7 +21,7 @@ export default function validateToken(router:any){
   
     let dateExp = new Date(decode.exp * 1000).toLocaleString();
     let date = new Date().toLocaleString()
-    console.log(dateExp, date)
+    
     if (date > dateExp) {
       swal.fire({
         icon: 'info',

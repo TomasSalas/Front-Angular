@@ -38,17 +38,20 @@ export class ViewPersonComponent implements OnInit {
   msgAlert:string = ""
 
   async viewUser(){
-    const url = 'http://localhost:3000/viewUsers'
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `${this.token}`
-      }
-    });
+    try {
+      const url = 'http://localhost:3000/viewUsers'
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${this.token}`
+        }
+      });
+      const result = await response.json();
+      this.datos = result.data;
+    }catch(error){
 
-    const result = await response.json();
-    this.datos = result.data;
+    }
   }
 
   btnEdit(data:any){
@@ -58,27 +61,39 @@ export class ViewPersonComponent implements OnInit {
     this.openModal()
   }
 
-  btnDelete(data:any){
+  async btnDelete(data:any){
     swal.fire({
       icon: 'warning',
       title: '¿Estás seguro?',
       text: "No podrás revertir esto!",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.value) {
         const url = 'http://localhost:3000/deleteUser'
-        const token:any = localStorage.getItem('TOKEN');
-        
-        swal.fire({
-          icon: 'success',
-          title: 'Usuario eliminado',
-          text: 'Usuario eliminado correctamente!',
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${this.token}`
+          },
+          body: JSON.stringify({
+            id: data
+          })
         });
         
+        const result = await response.json();
+        
+        if (result.error === null) {
+          swal.fire({
+            icon: 'success',
+            title: 'Usuario eliminado',
+            text: 'Usuario eliminado correctamente!',
+          });
+        }
+        this.viewUser()
       }
     });
-    console.log(data)
   }
 
   openModal(){

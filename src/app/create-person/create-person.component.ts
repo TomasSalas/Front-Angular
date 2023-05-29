@@ -54,6 +54,7 @@ export class CreatePersonComponent implements OnInit {
   }
 
   async savePerson(){
+    validateToken(this.router);
     const data = {
       name: this.name,
       lastname: this.lastname,
